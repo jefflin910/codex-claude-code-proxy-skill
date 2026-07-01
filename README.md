@@ -24,11 +24,28 @@ mkdir -p ~/.codex/skills
 cp -R skills/codex-claude-code-proxy ~/.codex/skills/
 ```
 
-Then ask Codex:
+## Use It From Codex
+
+After the skill is installed, you can ask Codex to run the terminal setup for
+you:
 
 ```text
-Use $codex-claude-code-proxy to install the proxy into ~/codex-claude-proxy.
+Use $codex-claude-code-proxy to install the proxy into ~/codex-claude-proxy,
+start it in the background, and show me the Claude Code Desktop Gateway
+settings.
 ```
+
+Codex will:
+
+1. Copy the bundled Node proxy into `~/codex-claude-proxy`.
+2. Create `~/codex-claude-proxy/.env` with a random local bearer token.
+3. Run the proxy on `http://127.0.0.1:15722`.
+4. Verify `/health` and `/v1/models`.
+5. Print the exact Gateway settings for Claude Code Desktop.
+
+The skill can run terminal commands through Codex, but it does not modify
+Claude Code Desktop automatically. You still paste the printed Gateway settings
+into Claude Code Desktop once.
 
 ## Manual Proxy Install
 
@@ -38,6 +55,12 @@ cd skills/codex-claude-code-proxy
 cd ~/codex-claude-proxy
 npm test
 npm start
+```
+
+To start it in the background from the skill directory:
+
+```bash
+./scripts/start_proxy.sh ~/codex-claude-proxy
 ```
 
 Claude Desktop Gateway:

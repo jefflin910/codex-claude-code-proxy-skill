@@ -11,18 +11,21 @@ The bundled proxy lives at `assets/codex-claude-proxy`. It exposes an Anthropic-
 
 ## Fast Path
 
+When the user asks to set this up, do the terminal work directly. Do not only
+explain the commands unless the user asks for explanation only.
+
 1. Copy the bundled proxy into a user workspace:
 
 ```bash
 ./scripts/install_proxy.sh /path/to/codex-claude-proxy
 ```
 
-2. Start it:
+2. Run tests and start it in the background:
 
 ```bash
 cd /path/to/codex-claude-proxy
 npm test
-npm start
+/path/to/skill/scripts/start_proxy.sh /path/to/codex-claude-proxy
 ```
 
 3. Configure Claude Desktop Gateway:
@@ -40,6 +43,11 @@ TOKEN="$(grep '^LOCAL_GATEWAY_TOKEN=' .env | cut -d= -f2-)"
 curl -sS -H "Authorization: Bearer $TOKEN" http://127.0.0.1:15722/health
 curl -sS -H "Authorization: Bearer $TOKEN" http://127.0.0.1:15722/v1/models
 ```
+
+5. Tell the user:
+   - the proxy is running at `http://127.0.0.1:15722`
+   - the Gateway API key is `LOCAL_GATEWAY_TOKEN` from `.env`
+   - Claude Code Desktop still needs manual Gateway settings entry
 
 ## What It Implements
 
@@ -66,6 +74,18 @@ test -r ~/.codex/auth.json && echo "codex auth exists"
 ```
 
 If `~/.codex/auth.json` is missing or expired, ask the user to reopen Codex or run Codex login before testing Claude Desktop.
+
+## User-Facing Explanation
+
+If the user asks whether other people can use it, explain:
+
+- Yes, if they have Codex logged in locally so `~/.codex/auth.json` exists.
+- Yes, if Codex is allowed to run terminal commands on their machine.
+- The skill can install and start the local proxy from Codex.
+- Claude Code Desktop does not get changed automatically; the user must paste
+  the Gateway URL, API key, and `bearer` auth scheme once.
+- After that, Claude Code Desktop can use the proxy like a normal inference
+  gateway.
 
 ## When Editing
 
