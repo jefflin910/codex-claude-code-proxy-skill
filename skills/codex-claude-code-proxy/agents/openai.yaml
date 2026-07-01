@@ -1,0 +1,8 @@
+interface:
+  display_name: "Codex Claude Code Proxy"
+  short_description: "Run Claude Code Desktop through Codex auth"
+  brand_color: "#1D9BF0"
+  default_prompt: "Use $codex-claude-code-proxy to install and configure the local Claude Code Desktop proxy."
+
+policy:
+  allow_implicit_invocation: true

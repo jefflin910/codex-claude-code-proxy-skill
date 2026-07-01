@@ -1,0 +1,14 @@
+{
+  "name": "codex-claude-proxy",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "description": "Local Anthropic Messages proxy backed by Codex ChatGPT auth.",
+  "scripts": {
+    "start": "node src/server.mjs --port 15722",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
